@@ -14,7 +14,6 @@ public class ButtonClickTutorial extends Utils {
     public static void main(String[] args) throws IOException {
          ChromeDriver driver = Utils.getChromeDriver();
 
-
         try {
             driver.get("https://demoqa.com/buttons");
 

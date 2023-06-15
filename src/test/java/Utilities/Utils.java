@@ -9,15 +9,11 @@ import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Utils {
-
-    public static void main(String[] args) throws IOException {
-        System.out.println(LocalDateTime.now());
-
-    }
 
     public static ChromeDriver getChromeDriver() {
         System.setProperty("webdriver.chrome.driver", "drivers/chromedriver");
@@ -25,6 +21,7 @@ public class Utils {
         chromeOptions.addArguments("start-maximized");
 //        chromeOptions.addArguments("headless");
         ChromeDriver driver = new ChromeDriver(chromeOptions);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
         return driver;
     }
 
@@ -37,8 +34,5 @@ public class Utils {
                 + "/logs/printscreen-"+ formatter.format(LocalDateTime.now()) + ".png";
         FileUtils.copyFile(source, new File(destinationFile));
     }
-
-
-
 
 }
