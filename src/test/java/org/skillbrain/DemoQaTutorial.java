@@ -4,12 +4,28 @@ import Utilities.Utils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.Test;
 
 public class DemoQaTutorial {
 
-    public static void main(String[] args) throws InterruptedException {
+    private ChromeDriver driver;
+    private String currentUrl;
+    private String title;
+    @BeforeSuite
+    public void initializeDriver() {
+        driver = Utils.getChromeDriver();
+    }
 
-        ChromeDriver driver = Utils.getChromeDriver();
+    @AfterSuite
+    public void closeDriver() {
+        driver.quit();
+    }
+
+    @Test(dependsOnMethods = "demoQaLoginTest", testName = "Complete practice form with valid data")
+    public void demoQaFormTest() throws InterruptedException {
         try {
             driver.get("https://demoqa.com/");
             // tag name -> div, header, strong, a
@@ -19,10 +35,11 @@ public class DemoQaTutorial {
             // xpath -> //tagName[@property='value'] ->
             WebElement formsCard = driver.findElement(By.xpath("(//div[@class='card mt-4 top-card'])[2]"));
             formsCard.click();
-            Thread.sleep(2000);
             WebElement practiceForm = driver.findElement(By.xpath("(//li[@id='item-0'])[2]"));
             practiceForm.click();
-            Thread.sleep(2000);
+            currentUrl = driver.getCurrentUrl();
+            title = driver.getTitle();
+            Assert.assertEquals(currentUrl, "https://demoqa.com/automation-practice-form");
             driver.findElement(By.id("firstName")).sendKeys("Cristian");
             driver.findElement(By.id("lastName")).sendKeys("Sandu");
             driver.findElement(By.id("userEmail")).sendKeys("test@gmail.com");
@@ -50,15 +67,20 @@ public class DemoQaTutorial {
             WebElement city = driver.findElement(By.id("react-select-4-input"));
             city.sendKeys("Agra");
             city.sendKeys(Keys.RETURN);
-            Thread.sleep(5000);
         } catch (NoSuchElementException | ElementNotInteractableException |
-                StaleElementReferenceException e) {
+                 StaleElementReferenceException e) {
             String errorMessage = e.getMessage();
             System.out.println(errorMessage);
-        } finally {
-            driver.quit();
         }
+    }
 
+    @Test(testName = "Login to demoqa page with valid user")
+    public void demoQaLoginTest() throws InterruptedException {
+        driver.get("https://demoqa.com");
+        title = driver.getTitle();
+        currentUrl = driver.getCurrentUrl();
+        Assert.assertEquals(title, "DEMOQA");
+        Assert.assertEquals(currentUrl,"https://demoqa.com/");
     }
 
 
