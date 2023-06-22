@@ -8,15 +8,23 @@ import org.testng.Assert;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
+import pageObjects.DemoQaPage;
 
 public class DemoQaTutorial {
 
     private ChromeDriver driver;
     private String currentUrl;
     private String title;
+    private DemoQaPage demoQaPage;
+
     @BeforeSuite
     public void initializeDriver() {
         driver = Utils.getChromeDriver();
+    }
+
+    @BeforeSuite(dependsOnMethods = "initializeDriver")
+    public void initializePage() {
+        demoQaPage = new DemoQaPage(driver);
     }
 
     @AfterSuite
@@ -25,9 +33,38 @@ public class DemoQaTutorial {
     }
 
     @Test(dependsOnMethods = "demoQaLoginTest", testName = "Complete practice form with valid data")
+    public void demoQaFormTestRefactored() {
+        demoQaPage.formsCard.click();
+        demoQaPage.practiceForm.click();
+        currentUrl = driver.getCurrentUrl();
+        Assert.assertEquals(currentUrl, "https://demoqa.com/automation-practice-form");
+        demoQaPage.firstName.sendKeys("Cristan");
+        demoQaPage.lastName.sendKeys("Sandu");
+        demoQaPage.userEmail.sendKeys("test@gmail.com");
+        demoQaPage.maleRadioButton.click();
+        demoQaPage.userNumber.sendKeys("+4012324255");
+        demoQaPage.doB.click();
+        Select selectMonth = new Select(demoQaPage.selectMonth);
+        selectMonth.selectByIndex(4);
+        Select selectYear = new Select(demoQaPage.selectYear);
+        selectYear.selectByValue("1993");
+        demoQaPage.selectDay.click();
+        demoQaPage.subjectInput.sendKeys("Math");
+        demoQaPage.subjectInput.sendKeys(Keys.RETURN);
+        demoQaPage.subjectInput.sendKeys("Acc");
+        demoQaPage.subjectInput.sendKeys(Keys.RETURN);
+        demoQaPage.checkHobbies.click();
+        demoQaPage.homeAddress.sendKeys("HOme");
+        demoQaPage.selectState.sendKeys("Uttar");
+        demoQaPage.selectState.sendKeys(Keys.RETURN);
+        demoQaPage.selectCity.sendKeys("Agra");
+        demoQaPage.selectCity.sendKeys(Keys.RETURN);
+        System.out.println("Test finished without error");
+    }
+
+    @Test(dependsOnMethods = "demoQaLoginTest", testName = "Complete practice form with valid data")
     public void demoQaFormTest() throws InterruptedException {
         try {
-            driver.get("https://demoqa.com/");
             // tag name -> div, header, strong, a
             WebElement header = driver.findElement(By.tagName("header"));
 //        header.click();
