@@ -5,10 +5,6 @@
         <classes>
             <class name="org.skillbrain.AlertTutorial"/>
             <class name="org.skillbrain.DemoQaTutorial">
-                <methods>
-                    <include name="demoQaFormTest"/>
-                    <include name="demoQaLoginTest"/>
-                </methods>
             </class>
         </classes>
     </test>
