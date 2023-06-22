@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Demo QA Test Suite">
+    <test verbose="2" preserve-order="true" name="M:/Java/Marte-23-03-23">
+        <classes>
+            <class name="org.skillbrain.DemoQaTutorial">
+                <methods>
+                    <include name="demoQaFormTest"/>
+                    <include name="demoQaLoginTest"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
