@@ -5,18 +5,20 @@ import Utilities.Utils;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
+import java.net.MalformedURLException;
+
 public class AlertTutorial {
 
-    private ChromeDriver driver;
+    private RemoteWebDriver driver;
     @BeforeSuite
-    public void initializeDriver() {
-        driver = Utils.getChromeDriver();
+    public void initializeDriver() throws MalformedURLException {
+        driver = Utils.getRemoteWebDriver();
     }
 
     @AfterSuite

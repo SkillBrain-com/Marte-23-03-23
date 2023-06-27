@@ -1,8 +1,8 @@
 package org.skillbrain;
 
 import Utilities.Utils;
-import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.AfterSuite;
@@ -11,16 +11,18 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pageObjects.DemoQaPage;
 
+import java.net.MalformedURLException;
+
 public class DemoQaTutorial {
 
-    private ChromeDriver driver;
+    private RemoteWebDriver driver;
     private String currentUrl;
     private String title;
     private DemoQaPage demoQaPage;
 
     @BeforeSuite
-    public void initializeDriver() {
-        driver = Utils.getChromeDriver();
+    public void initializeDriver() throws MalformedURLException {
+        driver = Utils.getRemoteWebDriver();
     }
 
     @BeforeSuite(dependsOnMethods = "initializeDriver")
