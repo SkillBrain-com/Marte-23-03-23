@@ -9,7 +9,6 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
-import java.util.Iterator;
 import java.util.Set;
 
 public class DiscordWebPageLoginTest {
@@ -35,7 +34,7 @@ public class DiscordWebPageLoginTest {
     public void openBrowser() {
 
         currentURL = driver.getCurrentUrl();
-        Assert.assertEquals(currentURL, "https://discord.com/login");
+        Assert.assertEquals(currentURL, "https://discord.com/");
         System.out.println(currentURL);
 
     }
@@ -63,29 +62,28 @@ public class DiscordWebPageLoginTest {
 
 
 
-    @Test
+    @Test(dependsOnMethods = "loginOnPage")
     public void emailBox(){
 
-        Set<String> windowHandles = driver.getWindowHandles();
-        System.out.println(windowHandles);
-        Iterator<String> windowHandlesIterator = windowHandles.iterator();
-        String parentID = windowHandlesIterator.next();
-        String childID = windowHandlesIterator.next();
-        driver.switchTo().window(childID);
-
-        WebElement emailBox = driver.findElement(By.id("uid_16"));
+//        Set<String> windowHandles = driver.getWindowHandles();
+//        System.out.println(windowHandles);
+//        Iterator<String> windowHandlesIterator = windowHandles.iterator();
+//        String parentID = windowHandlesIterator.next();
+//        String childID = windowHandlesIterator.next();
+//        driver.switchTo().window(childID);
+        WebElement emailBox = driver.findElement(By.xpath("//input[@name='email']"));
         emailBox.click();
         emailBox.sendKeys("testdiscord95@gmail.com");
 
     }
 
-    @Test
+    @Test()
     public void userName(){
         WebElement userName = driver.findElement(By.xpath("(//div[@class='inputWrapper-2K8ds1']) [2]"));
         userName.click();
         userName.sendKeys("Faymus1995");
     }
-    @Test
+    @Test()
     public void password(){
         WebElement password = driver.findElement(By.xpath("(//div[@class='inputWrapper-2K8ds1']) [3]"));
         password.click();
